@@ -1,0 +1,20 @@
+name: Copiar a Directorio Compartido
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  copy-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - env:
+          BASE_DIR: "/Shared/projects"
+          PROJ: "Grupo-01"
+        run: |
+          sudo mkdir -p "$BASE_DIR/$PROJ"
+          sudo rsync -a --exclude='.git/' ./ "$BASE_DIR/$PROJ/"
